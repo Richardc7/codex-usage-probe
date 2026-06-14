@@ -1,23 +1,36 @@
+<div align="center">
+
 # Codex Usage Probe
 
-[English README](README.md)
+轻量级 macOS 菜单栏 Codex 用量监控工具。
 
-Codex Usage Probe 是一个轻量级 macOS 菜单栏应用，同时也提供 Swift 命令行探针，用来查看 Codex 使用额度。
+[![Swift](https://img.shields.io/badge/Swift-6-orange.svg)](https://www.swift.org/)
+[![macOS](https://img.shields.io/badge/macOS-13%2B-blue.svg)](https://www.apple.com/macos/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-8%20passing-brightgreen.svg)](#开发)
 
-它会读取本机 `~/.codex/auth.json` 中的 Codex ChatGPT 登录凭据，请求 Codex 用量接口，并在 macOS 状态栏显示 5 小时窗口和周窗口的用量。
+[English README](README.md) · [许可证](LICENSE)
 
-## 功能
+</div>
 
-- macOS 菜单栏应用，无 Dock 图标
-- 显示 Codex 5 小时额度和周额度
-- 可切换显示剩余百分比或已用百分比
-- 支持完整和简单两种状态栏格式
-- 可选显示重置次数，例如 `R1`
-- 当任一额度窗口剩余低于 20% 时显示低额度提示
-- 支持手动刷新和刷新间隔设置：`30s`、`1min`、`3min`、`5min`，或自定义 `30-3600s`
-- 菜单支持英文和中文
-- 提供 Swift CLI，方便调试和自动化
-- 支持脱敏原始 JSON 输出，方便检查接口结构
+## 概览
+
+Codex Usage Probe 是一个小型原生 macOS 工具，用于在状态栏显示 Codex 使用额度。项目同时包含菜单栏 App 和 Swift 命令行探针，方便日常查看、调试和自动化。
+
+应用会读取本机 `~/.codex/auth.json` 中的 Codex ChatGPT 登录凭据，请求 Codex 用量接口，并显示 5 小时窗口和周窗口的用量。
+
+## 功能亮点
+
+| 分类 | 说明 |
+| --- | --- |
+| 菜单栏 App | 原生 AppKit 状态栏应用，无 Dock 图标 |
+| 用量窗口 | 5 小时额度和周额度 |
+| 显示模式 | 剩余百分比或已用百分比 |
+| 显示格式 | 完整格式和简单格式 |
+| 重置次数 | 可选 `R1` 样式指示 |
+| 刷新 | 手动、`30s`、`1min`、`3min`、`5min`，或自定义 `30-3600s` |
+| 语言 | 英文和中文菜单 |
+| CLI | 普通文本、JSON、脱敏原始接口输出 |
 
 ## 状态栏示例
 
@@ -28,10 +41,12 @@ Codex Usage Probe 是一个轻量级 macOS 菜单栏应用，同时也提供 Swi
 !5h 18% · W 88%
 ```
 
+当任一用量窗口剩余低于 20% 时，会显示低额度提示。该提示可以在菜单中关闭。
+
 ## 环境要求
 
 - macOS 13 或更高版本
-- 安装带 Swift 6 支持的 Xcode Command Line Tools
+- 带 Swift 6 支持的 Xcode Command Line Tools
 - 已使用 ChatGPT 账号登录 Codex
 
 如果还没有登录 Codex：
@@ -40,7 +55,16 @@ Codex Usage Probe 是一个轻量级 macOS 菜单栏应用，同时也提供 Swi
 codex login
 ```
 
-## 构建菜单栏 App
+## 快速开始
+
+克隆仓库：
+
+```bash
+git clone https://github.com/Richardc7/codex-usage-probe.git
+cd codex-usage-probe
+```
+
+构建并打开菜单栏 App：
 
 ```bash
 ./build-app.sh
@@ -53,7 +77,7 @@ open .build/CodexUsage.app
 .build/CodexUsage.app
 ```
 
-## 运行命令行探针
+## CLI 用法
 
 普通文本输出：
 
@@ -79,6 +103,16 @@ swift run codex-usage-probe --raw
 swift run codex-usage-probe --auth /path/to/auth.json
 ```
 
+## 菜单选项
+
+| 菜单 | 选项 |
+| --- | --- |
+| 用量显示 | 剩余、已用 |
+| 格式 | 完整、简单 |
+| 语言 | 英文、中文 |
+| 刷新 | 30 sec、1 min、3 min、5 min、自定义 |
+| 开关 | 显示重置次数、显示低用量提示 |
+
 ## 开发
 
 运行测试：
@@ -94,6 +128,12 @@ swift build --product codex-usage-probe
 swift build --product CodexUsageMenuBar
 ```
 
+构建 release App bundle：
+
+```bash
+./build-app.sh
+```
+
 ## 项目结构
 
 ```text
@@ -107,7 +147,7 @@ Tests/
 
 ## 隐私说明
 
-应用会在本机读取 `~/.codex/auth.json`，以获取 Codex ChatGPT access token。该 token 只用于请求 Codex 用量接口，不会被打印、另存或发送给任何第三方服务。
+Codex Usage Probe 会在本机读取 `~/.codex/auth.json`，以获取 Codex ChatGPT access token。该 token 只用于向 ChatGPT 请求 Codex 用量数据，不会被打印、另存或发送给任何第三方服务。
 
 `--raw` 命令会对 `email`、`account_id`、`user_id` 等账号标识做脱敏处理。
 
