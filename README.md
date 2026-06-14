@@ -123,4 +123,4 @@ Because the endpoint is not a public API, its schema, availability, or authentic
 
 ## License
 
-No license has been selected yet. Add one before publishing or accepting external contributions.
+MIT. See [LICENSE](LICENSE).

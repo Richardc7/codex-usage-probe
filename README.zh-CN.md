@@ -123,4 +123,4 @@ https://chatgpt.com/backend-api/wham/usage
 
 ## 许可证
 
-当前还没有选择许可证。公开发布或接受外部贡献前，建议先添加明确许可证。
+MIT。详见 [LICENSE](LICENSE)。
